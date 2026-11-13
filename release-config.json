@@ -1,0 +1,13 @@
+{
+  "manualVersion": "0.2.15",
+  "manualReviewed": "2026-11-12",
+  "installationVersion": "0.2.17",
+  "installationReviewed": "2026-11-13",
+  "advisories": [
+    {
+      "title": "Important upgrade from 0.2.15 / 0.2.16",
+      "text": "Close Guild Wars 2 and install the latest beta ZIP manually. Those older DLLs can crash while unloading during a live update. Replace only TyriaChronicle.dll and keep your settings folder.",
+      "url": "https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.17"
+    }
+  ]
+}

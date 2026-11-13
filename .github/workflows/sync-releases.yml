@@ -1,0 +1,51 @@
+name: Sync beta release information
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-releases.yml'
+      - 'scripts/**'
+      - 'release-config.json'
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: release-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out website source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+      - name: Test release synchronization
+        run: node --test scripts/sync-releases.test.mjs
+      - name: Fetch published beta releases
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/sync-releases.mjs
+      - name: Commit changed release information
+        id: changes
+        shell: bash
+        run: |
+          git add index.html guide.html releases.json
+          if git diff --cached --quiet; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Synchronize published beta release information'
+            git push origin HEAD:main
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Request Pages publication explicitly
+        if: steps.changes.outputs.changed == 'true' || github.event_name != 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST 'repos/${{ github.repository }}/pages/builds'

@@ -1,13 +1,577 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Tyria Chronicle user manual: installation, events, individual reminders, fishing, personal lists, sharing and troubleshooting."><title>User guide — Tyria Chronicle</title><link rel="icon" href="images/web-header-clock-v1.png"><link rel="stylesheet" href="styles.css"><script src="app.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header><a class="brand" href="index.html"><img src="images/web-header-clock-v1.png" width="38" height="38" alt=""><span>TYRIA CHRONICLE<small>AN INDEPENDENT GW2 COMPANION</small></span></a><nav aria-label="Main navigation"><a href="index.html#features">Features</a><a href="guide.html" aria-current="page">User guide</a><a href="#changelog">Changelog</a><a class="nav-download" href="index.html#download">Get the beta ↗</a></nav></header><main id="main" class="guide-layout"><aside class="sidebar"><label for="guide-search">FIND YOUR ANSWER</label><input id="guide-search" type="search" placeholder="Search the guide…"><p id="search-status" role="status" aria-live="polite"></p><nav aria-label="Guide topics"><a href="#start">Getting started</a><a href="#events">Events</a><a href="#reminders">Reminders</a><a href="#fishing">Fishing</a><a href="#lists">Personal lists</a><a href="#train-planning">Train planning</a><a href="#sharing">Sharing</a><a href="#faq">FAQ & troubleshooting</a><a href="#changelog">Changelog</a><a href="#about">About & support</a><a href="#privacy">Privacy & cookies</a></nav></aside><div class="guide-content"><p class="eyebrow">THE FIELD GUIDE</p><p class="note">Train planning is available in public beta 0.2.15. Screenshots show the released 0.2.14 visual design and current 0.2.15 planning and goal-list views.</p><h1>A little help for<br>the road ahead.</h1><p>Practical steps for Tyria Chronicle <strong>0.2.15-beta</strong>. Reviewed against the public README and release notes on 12 November 2026.</p><p class="note">This guide covers documented beta behavior. Schedules are bundled estimates, not live map status. In-game confirmation of new features is still welcome.</p>
-<article id="start"><p class="number">01 / GETTING STARTED</p><h2>From download to your first event.</h2><h3>Install the beta</h3><ol><li>Use <strong>Windows x64</strong> and install <a href="https://raidcore.gg/gw2/nexus">Raidcore Nexus</a> separately.</li><li>Open <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases">beta releases</a>, read the newest release notes and download the attached <code>TyriaChronicle-…-windows-x64.zip</code>. GitHub’s “Source code” ZIP is not the addon. The standalone DLL asset is for Nexus updates.</li><li><strong>Close Guild Wars 2.</strong> Extract the downloaded ZIP.</li><li>Copy <code>TyriaChronicle.dll</code> from the ZIP into your <code>Guild Wars 2/addons</code> folder.</li><li>Start the game and enable <strong>Tyria Chronicle</strong> in Nexus.</li><li>Click the clock icon or press <kbd>Ctrl + Shift + E</kbd> to open it.</li></ol><h3 id="gw2launcher">Gw2Launcher and multiple accounts</h3><p>Use the <strong>addons folder that Nexus uses for the game instance you launch</strong>. With localized execution this can be inside a numbered account folder, for example <code>Guild Wars 2/Gw2Launcher/1/addons</code>, rather than the main game's addons folder.</p><ol><li>Check your launcher configuration and that client's Nexus log to identify the active addons directory.</li><li>Install Tyria Chronicle in each separate active addon directory where you want to use it.</li><li>Launch the relevant client and verify Tyria Chronicle appears under <strong>Installed</strong> in Nexus.</li></ol><p class="note">Some launcher setups share or link folders. Several visible addons folders do not necessarily mean separate installations or separate settings.</p><h3>Update without losing your lists</h3><p>In Nexus, enable pre-release updates for Tyria Chronicle and choose <strong>Check for Updates</strong>. In 0.2.8 or newer, <strong>Update options → Open Nexus addons</strong> provides a shortcut; complete installation in Nexus. If that shortcut differs on your Nexus version, open the host addon menu manually.</p><p>For a manual update, close the game, download and extract the new release ZIP, then replace the existing DLL. Settings and lists are retained. The release’s SHA256 file is provided to verify its ZIP.</p><p class="note">On 0.2.6 or 0.2.7, the old direct Update button does not work. Use Nexus’s own update control or replace the DLL manually. Users still on 0.2.0 need a manual update to gain Nexus update support.</p><h3>What changed in 0.2.13?</h3><p>Events use readable two-column cards. Details, Fishing, reminders and Quick help have clearer layouts. Category symbols are independently drawn; unapproved event portraits are excluded.</p><h3>Your first five minutes</h3><p>Open the event list, choose a time range, find an event and inspect its map and waypoint. Select a reminder, then try a personal list. No GW2 API key is needed.</p><p class="source">Sources: <a href="https://github.com/ZevaXO/TyriaChronicle-beta/blob/main/README.md">README</a> · <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.12">0.2.12 release</a></p></article>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Tyria Chronicle user manual: installation, events, individual reminders, fishing, personal lists, sharing and troubleshooting."><title>User guide — Tyria Chronicle</title><link rel="icon" href="images/web-header-clock-v1.png"><link rel="stylesheet" href="styles.css"><script src="app.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header><a class="brand" href="index.html"><img src="images/web-header-clock-v1.png" width="38" height="38" alt=""><span>TYRIA CHRONICLE<small>AN INDEPENDENT GW2 COMPANION</small></span></a><nav aria-label="Main navigation"><a href="index.html#features">Features</a><a href="guide.html" aria-current="page">User guide</a><a href="#changelog">Changelog</a><a class="nav-download" href="index.html#download">Get the beta ↗</a></nav></header><main id="main" class="guide-layout"><aside class="sidebar"><label for="guide-search">FIND YOUR ANSWER</label><input id="guide-search" type="search" placeholder="Search the guide…"><p id="search-status" role="status" aria-live="polite"></p><nav aria-label="Guide topics"><a href="#start">Getting started</a><a href="#events">Events</a><a href="#reminders">Reminders</a><a href="#fishing">Fishing</a><a href="#lists">Personal lists</a><a href="#train-planning">Train planning</a><a href="#sharing">Sharing</a><a href="#faq">FAQ & troubleshooting</a><a href="#changelog">Changelog</a><a href="#about">About & support</a><a href="#privacy">Privacy & cookies</a></nav></aside><div class="guide-content"><!-- release:warning:start -->
+<aside class="release-alert" aria-label="Important upgrade information"><h2>Important release information · 0.2.17</h2><p style="white-space:pre-line">If you use 0.2.15 or 0.2.16, close GW2 and install the ZIP manually. Those versions can crash while unloading during a live update. New code cannot protect the old DLL while it is being unloaded. Replace only TyriaChronicle.dll; keep your settings folder.</p><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.17">Read the upgrade notes ↗</a><h2>Important upgrade from 0.2.15 / 0.2.16</h2><p style="white-space:pre-line">Close Guild Wars 2 and install the latest beta ZIP manually. Those older DLLs can crash while unloading during a live update. Replace only TyriaChronicle.dll and keep your settings folder.</p><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.17">Read the upgrade notes ↗</a></aside>
+<!-- release:warning:end --><!-- release:guide-status:start -->
+<p class="note">Latest beta: <strong>0.2.17</strong>. Feature guides reviewed for <strong>0.2.15</strong> on 12 November 2026; installation/update troubleshooting reviewed for <strong>0.2.17</strong> on 13 November 2026. Automatic release updates do not mark the manual as newly reviewed.</p>
+<!-- release:guide-status:end --><p class="eyebrow">THE FIELD GUIDE</p><p class="note">Train planning was introduced in 0.2.15. Screenshots show the 0.2.14 visual design and 0.2.15 planning and goal-list views; newer versions may differ.</p><h1>A little help for<br>the road ahead.</h1><p>Feature guides reviewed for <strong>0.2.15-beta</strong> on 12 November 2026. Installation and update troubleshooting reviewed for <strong>0.2.17-beta</strong> on 13 November 2026. Release information updates automatically; guide review dates do not.</p><p class="note">This guide covers documented beta behavior. Schedules are bundled estimates, not live map status. In-game confirmation of new features is still welcome.</p>
+<article id="start"><p class="number">01 / GETTING STARTED</p><h2>From download to your first event.</h2><h3>Install the beta</h3><ol><li>Use <strong>Windows x64</strong> and install <a href="https://raidcore.gg/gw2/nexus">Raidcore Nexus</a> separately.</li><li>Open <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases">beta releases</a>, read the newest release notes and download the attached <code>TyriaChronicle-…-windows-x64.zip</code>. GitHub’s “Source code” ZIP is not the addon. The standalone DLL asset is for Nexus updates.</li><li><strong>Close Guild Wars 2.</strong> Extract the downloaded ZIP.</li><li>Copy <code>TyriaChronicle.dll</code> from the ZIP into your <code>Guild Wars 2/addons</code> folder.</li><li>Start the game and enable <strong>Tyria Chronicle</strong> in Nexus.</li><li>Click the clock icon or press <kbd>Ctrl + Shift + E</kbd> to open it.</li></ol><h3 id="gw2launcher">Gw2Launcher and multiple accounts</h3><p>Use the <strong>addons folder that Nexus uses for the game instance you launch</strong>. With localized execution this can be inside a numbered account folder, for example <code>Guild Wars 2/Gw2Launcher/1/addons</code>, rather than the main game's addons folder.</p><ol><li>Check your launcher configuration and that client's Nexus log to identify the active addons directory.</li><li>Install Tyria Chronicle in each separate active addon directory where you want to use it.</li><li>Launch the relevant client and verify Tyria Chronicle appears under <strong>Installed</strong> in Nexus.</li></ol><p class="note">Some launcher setups share or link folders. Several visible addons folders do not necessarily mean separate installations or separate settings.</p><h3>Update without losing your lists</h3><p class="note"><strong>Upgrading from 0.2.15 or 0.2.16:</strong> close GW2 and manually replace only TyriaChronicle.dll from the newest ZIP. These old DLLs can crash while unloading during a live update. Keep your settings folder; installing the new code cannot protect the old DLL during unload.</p><p>In Nexus, enable pre-release updates for Tyria Chronicle and choose <strong>Check for Updates</strong>. In 0.2.8 or newer, <strong>Update options → Open Nexus addons</strong> provides a shortcut; complete installation in Nexus. If that shortcut differs on your Nexus version, open the host addon menu manually.</p><p>For a manual update, close the game, download and extract the new release ZIP, then replace the existing DLL. Settings and lists are retained. The release’s SHA256 file is provided to verify its ZIP.</p><p class="note">On 0.2.6 or 0.2.7, the old direct Update button does not work. Use Nexus’s own update control or replace the DLL manually. Users still on 0.2.0 need a manual update to gain Nexus update support.</p><h3>What changed in 0.2.13?</h3><p>Events use readable two-column cards. Details, Fishing, reminders and Quick help have clearer layouts. Category symbols are independently drawn; unapproved event portraits are excluded.</p><h3>Your first five minutes</h3><p>Open the event list, choose a time range, find an event and inspect its map and waypoint. Select a reminder, then try a personal list. No GW2 API key is needed.</p><p class="source">Sources: <a href="https://github.com/ZevaXO/TyriaChronicle-beta/blob/main/README.md">README</a> · <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.12">0.2.12 release</a></p></article>
 <article id="events"><p class="number">02 / EVENTS</p><h2>Find your next stop.</h2><figure class="app-shot "><a href="images/events.png" target="_blank" rel="noopener"><img src="images/events.png" alt="Upcoming two-column Events interface with category navigation and waypoint controls" loading="lazy" decoding="async"></a><figcaption>App interface · 0.2.14 design <a href="images/events.png" target="_blank" rel="noopener">View full size ↗</a></figcaption></figure><ol><li>Open Tyria Chronicle using its clock icon or shortcut.</li><li>Choose how far ahead to browse. Presets include <strong>1h, 2h, 4h and 24h</strong>; direct minute entry is also supported.</li><li>Use the labeled <strong>Search</strong> field and the available filters to narrow the event list. Events are grouped by scheduled start time.</li><li>Read the event’s map and short explanation. Copy its waypoint for use in game chat.</li><li>After completing the event, mark <strong>Done today</strong> to pause its reminders until daily reset.</li></ol><p><strong>Tip:</strong> The search field’s Clear button removes only the search text, leaving other filters in place.</p><p class="note">A listed or estimated active event is not confirmation that your map has started it. Completion is manual; the addon does not detect kills. <strong>Shackles of the Ancients has no countdown or reminders while its changed schedule is unverified.</strong> Festival dates cover 2026 only. Weekly Wizard’s Vault boss suggestions are provisional and not account-verified; check your in-game objective.</p><p class="source">Sources: <a href="https://github.com/ZevaXO/TyriaChronicle-beta/blob/main/README.md">README</a> · <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.11">Search changes</a></p></article>
 <article id="reminders"><p class="number">03 / REMINDERS</p><h2>A little preparation goes a long way.</h2><figure class="app-shot "><a href="images/reminders.png" target="_blank" rel="noopener"><img src="images/reminders.png" alt="Reminder popup showing Copy waypoint and Done today" loading="lazy" decoding="async"></a><figcaption>App interface · 0.2.14 design <a href="images/reminders.png" target="_blank" rel="noopener">View full size ↗</a></figcaption></figure><figure class="app-shot settings-shot"><a href="images/settings.png" target="_blank" rel="noopener"><img src="images/settings.png" alt="Settings preview with notification choices, default reminder time and weekly boss options" loading="lazy" decoding="async"></a><figcaption>App interface · 0.2.14 design <a href="images/settings.png" target="_blank" rel="noopener">View full size ↗</a></figcaption></figure><ol><li>Turn the main <strong>Notifications</strong> switch on and ensure <strong>Mute</strong> is off.</li><li>Choose reminders by category or select individual events.</li><li>For a custom lead time, open an event’s details and uncheck <strong>Use default reminder time</strong>.</li><li>Enter <strong>0–60 minutes</strong> before that event. Use a longer lead when you want extra preparation time.</li><li>Check <strong>Use default reminder time</strong> again to restore the shared default. Choices are saved between sessions.</li></ol><p><strong>Next reminder</strong> shows the earliest notification time. A later event with a longer lead can therefore appear before an earlier event. Changing the lead does not resend a start that has already been notified.</p><h3>When the popup arrives</h3><p>Copy the waypoint or mark the event <strong>Done today</strong> directly in the reminder popup. The popup is movable and optional sound is supported. Use Undo if you marked an event by mistake.</p><p class="note">Done today lasts until <strong>00:00 UTC</strong>. Ley-Line Anomaly shares completion across Gendarran Fields, Timberline Falls and Iron Marches. Marking any one done pauses all three; undoing from any location restores the group according to your saved reminder choices.</p><p class="source">Sources: <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.12">Individual reminder times</a> · <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.7">Shared Anomaly completion</a></p></article>
 <article id="fishing"><p class="number">04 / FISHING</p><h2>Follow the light.</h2><figure class="app-shot "><a href="images/fishing.png" target="_blank" rel="noopener"><img src="images/fishing.png" alt="Fishing clock preview with region selection, phase timeline and reminder controls" loading="lazy" decoding="async"></a><figcaption>App interface · 0.2.14 design <a href="images/fishing.png" target="_blank" rel="noopener">View full size ↗</a></figcaption></figure><ol><li>Open the fish-marked <strong>Fishing</strong> button next to the clock.</li><li>Manually choose your map region: <strong>Tyria</strong> or <strong>Cantha / Castora</strong>.</li><li>Read the current phase, compact timeline and time remaining until the next phase.</li><li>To receive alerts, enable <strong>Fishing reminders</strong>, select phases and choose a lead time. Dawn and Dusk are preselected, but fishing reminders start disabled.</li><li>Keep main <strong>Notifications on</strong> and <strong>Mute off</strong>. Fishing alerts also appear in Next reminder.</li></ol><p><strong>Dawn and Dusk each last five minutes.</strong> Day/night fish can also be caught during those transition windows.</p><p class="note">The clock follows standard outdoor schedules. It does not detect your map or automatically select a region. Fixed-time maps and instances can differ.</p><h3>If a phase looks wrong</h3><p>Check your selected region and local/UTC display setting. Report the map, region selection, display setting and the phase you observed through Help & feedback or Discord.</p><p class="source">Sources: <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.9">Fishing introduction</a> · <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.15">Current fishing notes</a></p></article>
 <article id="lists"><p class="number">05 / PERSONAL LISTS</p><h2>Turn a goal into a next step.</h2><figure class="app-shot "><a href="images/new-list.png" target="_blank" rel="noopener"><img src="images/new-list.png" alt="Create a personal list using a template or an empty list" loading="lazy" decoding="async"></a><figcaption>App interface · 0.2.14 design <a href="images/new-list.png" target="_blank" rel="noopener">View full size ↗</a></figcaption></figure><figure class="app-shot "><a href="images/obsidian-list-v15.png" target="_blank" rel="noopener"><img src="images/obsidian-list-v15.png" alt="Obsidian armour goal list with Amnytas, Outer Nayos and Unlocking the Wizard’s Tower" loading="lazy" decoding="async"></a><figcaption>App interface · 0.2.14 design <a href="images/obsidian-list-v15.png" target="_blank" rel="noopener">View full size ↗</a></figcaption></figure><ol><li>Open <strong>My lists</strong>.</li><li>Choose <strong>+ New list → From a template</strong> or <strong>Empty list</strong>, then <strong>Create my list</strong>.</li><li>Choose <strong>Obsidian armour, Aurene weapons, HoT materials, Daily meta round</strong> or the new <strong>Classic meta train</strong> template.</li><li>Edit the list to fit your own priorities and mark event completion manually as you play.</li><li>For an event train, open <strong>Share list</strong> to preview the next scheduled starts and waypoints.</li></ol><p>Creating a list does not enable reminders. Use <strong>Enable reminders</strong> in its header to select its events without disabling your other choices. Notifications, Mute and Done today still apply. Settings and lists are retained when you update by replacing the DLL.</p><p class="note">Templates are farming aids, not complete crafting recipes. Train planning supports estimated durations and a map-change margin; review the route yourself because estimates cannot account for queues, map preparation or population.</p><p class="source">Sources: <a href="https://github.com/ZevaXO/TyriaChronicle-beta/blob/main/README.md">README</a> · <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.6">Share list</a></p></article>
 <article id="train-planning"><p class="number">PERSONAL PLANNING / AVAILABLE IN 0.2.15</p><h2>Build a meta train around your group.</h2><figure class="app-shot train-shot"><a href="images/train-planning-v15.png" target="_blank" rel="noopener"><img src="images/train-planning-v15.png" width="627" height="661" alt="Train editor showing later start choices, Next that fits and timing warnings" loading="lazy" decoding="async"></a><figcaption>Train planning · 0.2.15 <a href="images/train-planning-v15.png" target="_blank" rel="noopener">View full size ↗</a></figcaption></figure><ol><li>Open <strong>My lists → Edit list</strong> and enable <strong>Train planning</strong>.</li><li>Select events in <strong>Choose events</strong>. Choose a later <strong>Start</strong>, or use <strong>Next that fits</strong>. Each list keeps its own chosen times.</li><li>Adjust estimated event durations using <strong>Time…</strong> and set a map-change margin under <strong>Planning options</strong>.</li><li>Open <strong>Train preview</strong> to see your route in time order and review overlap or short map-change-gap warnings.</li><li>Use <strong>Find events for this gap</strong> for a curated shortlist of community-route stops that fit your estimates. <strong>Add this start</strong> selects the suggested occurrence.</li><li>Open <strong>Share list</strong> to copy the route using its chosen starts, then paste manually into your chosen chat channel.</li></ol><h3>Start with a classic</h3><p>The <strong>Classic meta train</strong> template seeds <strong>Piñata → Chak Gerent → Octovine</strong> in order. Matriarch is an optional tip, not an invented short timer.</p><p class="note">Durations are estimates, initially based on schedule windows. Map preparation, queues and population are not known. Suggestions are curated, not live popularity data. Adjust timings for your group; neither planning nor sharing guarantees the route fits.</p><h3>Plans and reminders are separate</h3><p>Chosen starts affect <strong>Train preview</strong> and <strong>Share list</strong>. The main timeline and reminders still follow normal schedules. Expired or unavailable chosen starts fall back to the next future start. Changing list membership does not change reminder choices. Existing settings and lists are retained.</p><p class="source">Sources: <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.15">0.2.15 release notes</a> · <a href="https://github.com/ZevaXO/TyriaChronicle-beta/blob/main/README.md">Public README</a></p></article><article id="sharing"><p class="number">06 / SHARING</p><h2>Bring the party along.</h2><h3>Share one event</h3><ol><li>Open <strong>Share</strong> on an event.</li><li>Review the message containing its scheduled start, name and waypoint.</li><li>Choose <strong>Copy</strong>, then paste it into your chosen game chat channel.</li></ol><h3>Share an event train</h3><ol><li>Open <strong>My lists → Share list</strong>.</li><li>Review each stop’s next scheduled start and waypoint. For planned lists, Share list uses your chosen starts. Expired or unavailable choices use the next future start.</li><li>Copy each preview message. Long trains split between events to keep waypoint codes intact.</li></ol><p>Times use <strong>xx:MM</strong> rather than your local hour. Train planning can flag estimated overlaps and map-change gaps, but sharing does not guarantee a route fits.</p><h3>Copy-only sharing in 0.2.13</h3><p>Sharing copies preview text to your clipboard. It does not open game chat or send game input. Paste manually into your chosen channel. Experimental Say from earlier betas has been removed pending clarification; earlier release notes describe historical behavior.</p><p class="source">Sources: <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.5">Event sharing</a> · <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.6">Train sharing</a> · <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.9">xx:MM format</a></p></article>
-<article id="faq"><p class="number">07 / FAQ & TROUBLESHOOTING</p><h2>When something needs a nudge.</h2><details><summary>Which download do I need?</summary><p>The attached <code>TyriaChronicle-…-windows-x64.zip</code> on the newest beta release. Not the automatically generated Source code ZIP. Nexus is installed separately.</p></details><details><summary>The addon does not appear. What should I check?</summary><p>Confirm Windows x64, Nexus installation, and that the extracted DLL is in the addons folder used by Nexus for the client you launched. With Gw2Launcher localized execution this may be a numbered account folder such as Guild Wars 2/Gw2Launcher/1/addons. Check that client's Nexus log and verify Tyria Chronicle appears under Installed. Shared or linked folders do not necessarily mean separate installations or settings. Start GW2 and enable Tyria Chronicle in Nexus. Try the clock icon or Ctrl + Shift + E. If it still fails, report your version and what you tried.</p></details><details><summary>Why am I not getting a reminder?</summary><p>Check Notifications is on, Mute is off, and the event or category is selected. Check Done today and your lead time. For Fishing, enable its separate reminders and select the right region and phases. A time change does not resend an already notified start.</p></details><details><summary>Why does Next reminder show a later event?</summary><p>Since 0.2.12 it chooses the earliest notification time, including preparation lead. A later event with a long lead may need to notify first.</p></details><details><summary>Why are all three Ley-Line Anomaly locations marked done?</summary><p>They share daily completion. Undo from any location to restore the group. Completion resets at 00:00 UTC and is marked manually.</p></details><details><summary>The update is stuck on Updating.</summary><p>The old button in 0.2.6/0.2.7 cannot complete this update. Use Nexus Check for Updates with pre-release updates enabled, or close the game and replace the DLL from the newest ZIP. Version information can take a few minutes to propagate.</p></details><details><summary>Do I need an API key or GitHub account?</summary><p>No GW2 API key is needed. Public beta downloads do not require a GitHub account. Discord is the primary feedback channel; GitHub issues are optional and require an account.</p></details><details><summary>Why is there no Shackles countdown?</summary><p>In 0.2.13, Shackles of the Ancients countdowns and reminders are paused until its changed schedule is verified. Its details remain available.</p></details><details><summary>Where did Say go?</summary><p>Experimental Say was removed in 0.2.13 pending clarification. Sharing is now Copy-only; paste manually into your chosen game chat channel.</p></details><details><summary>Are these live event timers?</summary><p>Schedules are bundled estimates, not live map status. Estimated active windows do not guarantee an event is running on your map. Fishing follows standard outdoor schedules.</p></details><details><summary>Does it hide during full-map view or cutscenes?</summary><p>Separate full-map and cutscene hiding is not implemented in the current beta.</p></details><details><summary>What should I include in a bug report?</summary><p>The version from Settings, your steps, expected result and actual result. For event timing, include date, map, time and time zone. For Fishing, include region, local/UTC setting and observed phase. A cropped screenshot helps; remove personal details. Help & feedback can copy basic troubleshooting information.</p></details><p class="source">Source: <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.15">Current release notes</a> and the linked topic sources above.</p></article>
-<article id="changelog"><p class="number">08 / VERSION NOTES</p><h2>The Chronicle, so far.</h2><p>Verified release snapshot · 12 November 2026. <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases">Check GitHub for newer releases ↗</a></p><div id="release-notes"><div class="changelog-entry"><span class="version">0.2.15-beta · 12 November 2026</span><h3>Build your own meta train.</h3><p>Choose later starts or Next that fits; save times per list and share them. Preview the route in time order, adjust durations and map-change margin, and find curated events for gaps. New Classic meta train template: Piñata → Chak Gerent → Octovine. Reminders retain normal schedules.</p><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.15">Full release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.14-beta · 12 November 2026</span><h3>A shared visual identity.</h3><p>Six embossed-metal category icons and a matching app-header clock from original text-only AI-generated concepts. The Nexus menu icon remains monochrome. Existing lists, settings and Copy-only sharing are retained.</p><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.14">Full release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.13-beta · 12 November 2026</span><h3>A clearer companion.</h3><p>Readable two-column cards and clearer details, Fishing, help and reminder windows. Independently drawn category symbols; unapproved event portraits excluded. Sharing is Copy-only; experimental Say removed pending clarification. Shackles countdowns and reminders paused until its changed schedule is verified. Ley-Line meeting-point explanation preserved, with updated privacy and licence notices.</p><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.13">Full release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.12-beta · 11 November 2026</span><h3>Your reminders, your timing.</h3><p>Per-event lead times from 0–60 minutes, saved between sessions. Next reminder now follows the earliest notification time.</p><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.12">Full release notes ↗</a></div></div></article>
+<article id="faq"><p class="number">07 / FAQ & TROUBLESHOOTING</p><h2>When something needs a nudge.</h2><details><summary>Which download do I need?</summary><p>The attached <code>TyriaChronicle-…-windows-x64.zip</code> on the newest beta release. Not the automatically generated Source code ZIP. Nexus is installed separately.</p></details><details><summary>What changed in update checks in 0.2.17?</summary><p>Manual checks during the 30-second cooldown queue with a countdown, then run without another click. A click during an active check uses the same request. Open Nexus addons and Download beta remain accessible if checking fails. Checking availability does not install an update.</p></details><details><summary>The addon does not appear. What should I check?</summary><p>Confirm Windows x64, Nexus installation, and that the extracted DLL is in the addons folder used by Nexus for the client you launched. With Gw2Launcher localized execution this may be a numbered account folder such as Guild Wars 2/Gw2Launcher/1/addons. Check that client's Nexus log and verify Tyria Chronicle appears under Installed. Shared or linked folders do not necessarily mean separate installations or settings. Start GW2 and enable Tyria Chronicle in Nexus. Try the clock icon or Ctrl + Shift + E; the main window starts closed. Version 0.2.16 fixed a missing startup shortcut, and 0.2.17 retains that recovery. If you use 0.2.15/0.2.16, close GW2 and install the newest ZIP manually. If it still fails, report your version and what you tried.</p></details><details><summary>Why am I not getting a reminder?</summary><p>Check Notifications is on, Mute is off, and the event or category is selected. Check Done today and your lead time. For Fishing, enable its separate reminders and select the right region and phases. A time change does not resend an already notified start.</p></details><details><summary>Why does Next reminder show a later event?</summary><p>Since 0.2.12 it chooses the earliest notification time, including preparation lead. A later event with a long lead may need to notify first.</p></details><details><summary>Why are all three Ley-Line Anomaly locations marked done?</summary><p>They share daily completion. Undo from any location to restore the group. Completion resets at 00:00 UTC and is marked manually.</p></details><details><summary>The update is stuck on Updating.</summary><p>The old button in 0.2.6/0.2.7 cannot complete this update. Use Nexus Check for Updates with pre-release updates enabled, or close the game and replace the DLL from the newest ZIP. Version information can take a few minutes to propagate.</p></details><details><summary>Do I need an API key or GitHub account?</summary><p>No GW2 API key is needed. Public beta downloads do not require a GitHub account. Discord is the primary feedback channel; GitHub issues are optional and require an account.</p></details><details><summary>Why is there no Shackles countdown?</summary><p>In 0.2.13, Shackles of the Ancients countdowns and reminders are paused until its changed schedule is verified. Its details remain available.</p></details><details><summary>Where did Say go?</summary><p>Experimental Say was removed in 0.2.13 pending clarification. Sharing is now Copy-only; paste manually into your chosen game chat channel.</p></details><details><summary>Are these live event timers?</summary><p>Schedules are bundled estimates, not live map status. Estimated active windows do not guarantee an event is running on your map. Fishing follows standard outdoor schedules.</p></details><details><summary>Does it hide during full-map view or cutscenes?</summary><p>Separate full-map and cutscene hiding is not implemented in the current beta.</p></details><details><summary>What should I include in a bug report?</summary><p>The version from Settings, your steps, expected result and actual result. For event timing, include date, map, time and time zone. For Fishing, include region, local/UTC setting and observed phase. A cropped screenshot helps; remove personal details. Help & feedback can copy basic troubleshooting information.</p></details><p class="source">Source: <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.15">Current release notes</a> and the linked topic sources above.</p></article>
+<article id="changelog"><p class="number">08 / VERSION NOTES</p><h2>The Chronicle, so far.</h2><!-- release:changelog:start -->
+<p>Latest published beta: <strong>0.2.17</strong> · 13 November 2026. Release information is synchronized automatically from <a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases">GitHub</a>. Guide review status is separate.</p><div id="release-notes"><div class="changelog-entry"><span class="version">0.2.17-beta · 13 November 2026</span><h3>Tyria Chronicle 0.2.17-beta</h3><ul><li>Guard against repeated or overlapping unload requests and late render/options callbacks after cleanup. This addresses the reproduced lifecycle crash during updates.</li><li>Manual version checks during the 30-second cooldown now queue with a countdown, then run without another click. Clicking during an active check uses the same request.</li><li>Keep Open Nexus addons and Download beta accessible even if the version check fails. Checking availability still does not install an update.</li><li>Startup shortcut recovery from 0.2.16 is retained. Existing lists, train planning, reminders and settings are retained.</li></ul><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.17-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## Important upgrade note
+
+**If you use 0.2.15 or 0.2.16, close GW2 and install the ZIP manually.** Those versions can crash while unloading during a live update. New code cannot protect the old DLL while it is being unloaded. Replace only TyriaChronicle.dll; keep your settings folder.
+
+## What&#39;s new
+
+- Guard against repeated or overlapping unload requests and late render/options callbacks after cleanup. This addresses the reproduced lifecycle crash during updates.
+- Manual version checks during the 30-second cooldown now queue with a countdown, then run without another click. Clicking during an active check uses the same request.
+- Keep Open Nexus addons and Download beta accessible even if the version check fails. Checking availability still does not install an update.
+- Startup shortcut recovery from 0.2.16 is retained. Existing lists, train planning, reminders and settings are retained.
+
+## Fishing
+
+Open Fishing next to the clock, choose your map region, then enable Fishing reminders if wanted. Main Notifications must be on and Mute off. Dawn and Dusk last five minutes; day/night fish can also be caught during those transitions. This clock follows the standard outdoor schedule, not live map detection: fixed-time maps and instances can differ.
+
+## Download and update
+
+Use Nexus&#39;s Check for Updates with pre-release updates enabled for Tyria Chronicle. In 0.2.8-beta or newer, Update options &gt; Open Nexus addons provides a shortcut to the host addon list; complete the update in Nexus. The old direct Update button in 0.2.6/0.2.7 is not supported.
+
+For manual installation, download **TyriaChronicle-0.2.17-beta-windows-x64.zip**, close GW2 and replace **Guild Wars 2/addons/TyriaChronicle.dll** with the file from the ZIP. Settings and lists are retained. The SHA256 file verifies the ZIP. GitHub&#39;s Source code downloads are not the installable addon; the standalone DLL asset is for Nexus updates. Version information may take a few minutes to propagate.
+
+## Support and feedback
+
+Use Help &amp; feedback or [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports are optional. For fishing times, include your map, selected region, local/UTC setting and the observed phase.
+
+## Testing and limitations
+
+1554 core checks plus update-checker and UI/settings/DLL lifecycle tests passed locally. Individual reminder tests cover long/short/zero leads, reverting to default, notification ordering, duplicate suppression, muted/off and unselected events, shared Anomaly completion, fishing independence and persisted/legacy settings. Normal startup after the local lifecycle fix was confirmed by the project owner. The harness covers duplicate/concurrent unload, late callbacks, recovery on reload, and queued update-check timing; it reproduces a failure with the previous release. This is not broad multi-system or exhaustive host-race validation. Tests cover later starts, midnight, overlap/buffer boundaries, per-list persistence, gap filtering and template IDs. Existing settings and lists are retained.
+
+Schedules are estimates, not live map status. Planning durations are estimates, initially based on schedule windows. Map preparation, queues and population are not known. Suggestions are a curated shortlist, not live popularity data. Expired or unavailable chosen starts use the next future start. Plan choices affect Train preview and Share list; the main timeline and reminders still follow normal schedules. Sharing does not guarantee the route fits. Copy does not open game chat or send input. Paste manually into your chosen channel. Full-map and cutscene hiding is not separately implemented.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.17">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.16-beta · 13 November 2026</span><h3>Tyria Chronicle 0.2.16-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.16-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Fix the Nexus clock shortcut sometimes missing after a normal GW2 startup even though reminders still run. No Disable/Load workaround should be needed.
+- Register the shortcut while its textures are queued, and recover delayed category artwork and header clock when Nexus makes them available.
+- Regression tests simulate cold-cache texture loading, late readiness and unloading while textures are pending. The prior beta fails the cold-start test; the fix passes.
+- The owner confirmed the shortcut appeared immediately after a real GW2 restart. Existing lists, train planning, reminders and settings are retained. The main window still starts closed.
+
+## Fishing
+
+Open Fishing next to the clock, choose your map region, then enable Fishing reminders if wanted. Main Notifications must be on and Mute off. Dawn and Dusk last five minutes; day/night fish can also be caught during those transitions. This clock follows the standard outdoor schedule, not live map detection: fixed-time maps and instances can differ.
+
+## Download and update
+
+Use Nexus&#39;s Check for Updates with pre-release updates enabled for Tyria Chronicle. In 0.2.8-beta or newer, Update options &gt; Open Nexus addons provides a shortcut to the host addon list; complete the update in Nexus. The old direct Update button in 0.2.6/0.2.7 is not supported.
+
+For manual installation, download **TyriaChronicle-0.2.16-beta-windows-x64.zip**, close GW2 and replace **Guild Wars 2/addons/TyriaChronicle.dll** with the file from the ZIP. Settings and lists are retained. The SHA256 file verifies the ZIP. GitHub&#39;s Source code downloads are not the installable addon; the standalone DLL asset is for Nexus updates. Version information may take a few minutes to propagate.
+
+## Support and feedback
+
+Use Help &amp; feedback or [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports are optional. For fishing times, include your map, selected region, local/UTC setting and the observed phase.
+
+## Testing and limitations
+
+1554 core checks plus update-checker and UI/settings/DLL lifecycle tests passed locally. Individual reminder tests cover long/short/zero leads, reverting to default, notification ordering, duplicate suppression, muted/off and unselected events, shared Anomaly completion, fishing independence and persisted/legacy settings. The startup fix was confirmed in a real GW2 restart by the project owner; this is not broad multi-system validation. Tests cover later starts, midnight, overlap/buffer boundaries, per-list persistence, gap filtering and template IDs. Existing settings and lists are retained.
+
+Schedules are estimates, not live map status. Planning durations are estimates, initially based on schedule windows. Map preparation, queues and population are not known. Suggestions are a curated shortlist, not live popularity data. Expired or unavailable chosen starts use the next future start. Plan choices affect Train preview and Share list; the main timeline and reminders still follow normal schedules. Sharing does not guarantee the route fits. Copy does not open game chat or send input. Paste manually into your chosen channel. Full-map and cutscene hiding is not separately implemented.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.16">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.15-beta · 12 November 2026</span><h3>Tyria Chronicle 0.2.15-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.15-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Plan a train from Edit list: see estimated durations, overlap warnings and a configurable map-change margin.
+- Choose later starts or use Next that fits. Each list keeps its own chosen times; Share list uses them.
+- Train preview shows the route in time order. Find events for this gap suggests established community-route stops fitting your estimates. Add this start selects that occurrence.
+- New Classic meta train template: Piñata, Chak Gerent and Octovine, seeded in order. Matriarch is an optional tip, not an invented short timer.
+- Existing settings and lists are retained; reminders keep their regular schedule.
+
+## Fishing
+
+Open Fishing next to the clock, choose your map region, then enable Fishing reminders if wanted. Main Notifications must be on and Mute off. Dawn and Dusk last five minutes; day/night fish can also be caught during those transitions. This clock follows the standard outdoor schedule, not live map detection: fixed-time maps and instances can differ.
+
+## Download and update
+
+Use Nexus&#39;s Check for Updates with pre-release updates enabled for Tyria Chronicle. In 0.2.8-beta or newer, Update options &gt; Open Nexus addons provides a shortcut to the host addon list; complete the update in Nexus. The old direct Update button in 0.2.6/0.2.7 is not supported.
+
+For manual installation, download **TyriaChronicle-0.2.15-beta-windows-x64.zip**, close GW2 and replace **Guild Wars 2/addons/TyriaChronicle.dll** with the file from the ZIP. Settings and lists are retained. The SHA256 file verifies the ZIP. GitHub&#39;s Source code downloads are not the installable addon; the standalone DLL asset is for Nexus updates. Version information may take a few minutes to propagate.
+
+## Support and feedback
+
+Use Help &amp; feedback or [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports are optional. For fishing times, include your map, selected region, local/UTC setting and the observed phase.
+
+## Testing and limitations
+
+1554 core checks plus update-checker and UI/settings/DLL lifecycle tests passed locally. Individual reminder tests cover long/short/zero leads, reverting to default, notification ordering, duplicate suppression, muted/off and unselected events, shared Anomaly completion, fishing independence and persisted/legacy settings. Local planning was tried in game by the project owner with positive initial feedback; this is not broad multi-system validation. Tests cover later starts, midnight, overlap/buffer boundaries, per-list persistence, gap filtering and template IDs. Existing settings and lists are retained.
+
+Schedules are estimates, not live map status. Planning durations are estimates, initially based on schedule windows. Map preparation, queues and population are not known. Suggestions are a curated shortlist, not live popularity data. Expired or unavailable chosen starts use the next future start. Plan choices affect Train preview and Share list; the main timeline and reminders still follow normal schedules. Sharing does not guarantee the route fits. Copy does not open game chat or send input. Paste manually into your chosen channel. Full-map and cutscene hiding is not separately implemented.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.15">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.14-beta · 12 November 2026</span><h3>Tyria Chronicle 0.2.14-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.14-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Six embossed-metal category icons with clear silhouettes and transparent backgrounds.
+- Matching metal clock in the app header; the Nexus menu icon remains monochrome.
+- Artwork is AI-generated from original generic concepts without game images as input; provenance and notices are recorded. Older excluded portrait proposals remain outside the build.
+- Existing lists, settings, Copy-only sharing and reminders are retained.
+
+## Fishing
+
+Open Fishing next to the clock, choose your map region, then enable Fishing reminders if wanted. Main Notifications must be on and Mute off. Dawn and Dusk last five minutes; day/night fish can also be caught during those transitions. This clock follows the standard outdoor schedule, not live map detection: fixed-time maps and instances can differ.
+
+## Download and update
+
+Use Nexus&#39;s Check for Updates with pre-release updates enabled for Tyria Chronicle. In 0.2.8-beta or newer, Update options &gt; Open Nexus addons provides a shortcut to the host addon list; complete the update in Nexus. The old direct Update button in 0.2.6/0.2.7 is not supported.
+
+For manual installation, download **TyriaChronicle-0.2.14-beta-windows-x64.zip**, close GW2 and replace **Guild Wars 2/addons/TyriaChronicle.dll** with the file from the ZIP. Settings and lists are retained. The SHA256 file verifies the ZIP. GitHub&#39;s Source code downloads are not the installable addon; the standalone DLL asset is for Nexus updates. Version information may take a few minutes to propagate.
+
+## Support and feedback
+
+Use Help &amp; feedback or [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports are optional. For fishing times, include your map, selected region, local/UTC setting and the observed phase.
+
+## Testing and limitations
+
+1519 core checks plus update-checker and UI/settings/DLL lifecycle tests passed locally. Individual reminder tests cover long/short/zero leads, reverting to default, notification ordering, duplicate suppression, muted/off and unselected events, shared Anomaly completion, fishing independence and persisted/legacy settings. Category icons and header clock were reviewed in game by the project owner. Further feedback on different UI scales is welcome. Existing settings and lists are retained.
+
+Schedules are estimates, not live map status. Share list does not check travel or event duration. Copy does not open game chat or send input. Paste manually into your chosen channel. Full-map and cutscene hiding is not separately implemented.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.14">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.13-beta · 12 November 2026</span><h3>Tyria Chronicle 0.2.13-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.13-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Readable two-column cards, clearer help, details, fishing and reminder windows.
+- Independently drawn category symbols; unapproved event portraits are excluded.
+- Copy-only event and train sharing; experimental Say removed pending clarification.
+- Shackles of the Ancients has no countdown/reminders until its changed schedule is verified.
+- Ley-Line meeting-point explanation preserved in generated data.
+- Clean-source release checks and current privacy/licence notices.
+
+## Fishing
+
+Open Fishing next to the clock, choose your map region, then enable Fishing reminders if wanted. Main Notifications must be on and Mute off. Dawn and Dusk last five minutes; day/night fish can also be caught during those transitions. This clock follows the standard outdoor schedule, not live map detection: fixed-time maps and instances can differ.
+
+## Download and update
+
+Use Nexus&#39;s Check for Updates with pre-release updates enabled for Tyria Chronicle. In 0.2.8-beta or newer, Update options &gt; Open Nexus addons provides a shortcut to the host addon list; complete the update in Nexus. The old direct Update button in 0.2.6/0.2.7 is not supported.
+
+For manual installation, download **TyriaChronicle-0.2.13-beta-windows-x64.zip**, close GW2 and replace **Guild Wars 2/addons/TyriaChronicle.dll** with the file from the ZIP. Settings and lists are retained. The SHA256 file verifies the ZIP. GitHub&#39;s Source code downloads are not the installable addon; the standalone DLL asset is for Nexus updates. Version information may take a few minutes to propagate.
+
+## Support and feedback
+
+Use Help &amp; feedback or [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports are optional. For fishing times, include your map, selected region, local/UTC setting and the observed phase.
+
+## Testing and limitations
+
+1512 core checks plus update-checker and UI/settings/DLL lifecycle tests passed locally. Individual reminder tests cover long/short/zero leads, reverting to default, notification ordering, duplicate suppression, muted/off and unselected events, shared Anomaly completion, fishing independence and persisted/legacy settings. The redesigned interface needs further in-game feedback; final screenshot capture was unavailable. Existing settings and lists are retained.
+
+Schedules are estimates, not live map status. Share list does not check travel or event duration. Copy does not open game chat or send input. Paste manually into your chosen channel. Full-map and cutscene hiding is not separately implemented.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.13">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.12-beta · 11 November 2026</span><h3>Tyria Chronicle 0.2.12-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.12-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Choose an individual reminder time in event details: uncheck Use default reminder time and enter 0-60 minutes before that event.
+- Restore the shared default by checking Use default reminder time again. Choices are saved between sessions.
+- Next reminder now selects the earliest notification time, including later events with longer preparation time.
+- Global Notifications, Mute, Done today and fishing reminders retain their existing behavior. Changing a time does not resend an already notified start.
+
+## Fishing
+
+Open Fishing next to the clock, choose your map region, then enable Fishing reminders if wanted. Main Notifications must be on and Mute off. Dawn and Dusk last five minutes; day/night fish can also be caught during those transitions. This clock follows the standard outdoor schedule, not live map detection: fixed-time maps and instances can differ.
+
+## Download and update
+
+Use Nexus&#39;s Check for Updates with pre-release updates enabled for Tyria Chronicle. In 0.2.8-beta or newer, Update options &gt; Open Nexus addons provides a shortcut to the host addon list; complete the update in Nexus. The old direct Update button in 0.2.6/0.2.7 is not supported.
+
+For manual installation, download **TyriaChronicle-0.2.12-beta-windows-x64.zip**, close GW2 and replace **Guild Wars 2/addons/TyriaChronicle.dll** with the file from the ZIP. Settings and lists are retained. The SHA256 file verifies the ZIP. GitHub&#39;s Source code downloads are not the installable addon; the standalone DLL asset is for Nexus updates. Version information may take a few minutes to propagate.
+
+## Support and feedback
+
+Use Help &amp; feedback or [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports are optional. For fishing times, include your map, selected region, local/UTC setting and the observed phase.
+
+## Testing and limitations
+
+1518 core checks plus update-checker and UI/settings/DLL lifecycle tests passed locally. Individual reminder tests cover long/short/zero leads, reverting to default, notification ordering, duplicate suppression, muted/off and unselected events, shared Anomaly completion, fishing independence and persisted/legacy settings. In-game confirmation of the new clock and reminders is welcome.
+
+Schedules are estimates, not live map status. Share list does not check travel or event duration. Say (test) sends one preview message per click; keep game chat empty and closed. Full-map and cutscene hiding is not separately implemented.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.12">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.11-beta · 11 November 2026</span><h3>Tyria Chronicle 0.2.11-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.11-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Search now has its own wide row with a magnifying glass and a visible Search label.
+- Improved search-field contrast and border make it easier to find.
+- A Clear button appears while searching and removes the search text without resetting other filters.
+
+## Fishing
+
+Open Fishing next to the clock, choose your map region, then enable Fishing reminders if wanted. Main Notifications must be on and Mute off. Dawn and Dusk last five minutes; day/night fish can also be caught during those transitions. This clock follows the standard outdoor schedule, not live map detection: fixed-time maps and instances can differ.
+
+## Download and update
+
+Use Nexus&#39;s Check for Updates with pre-release updates enabled for Tyria Chronicle. In 0.2.8-beta or newer, Update options &gt; Open Nexus addons provides a shortcut to the host addon list; complete the update in Nexus. The old direct Update button in 0.2.6/0.2.7 is not supported.
+
+For manual installation, download **TyriaChronicle-0.2.11-beta-windows-x64.zip**, close GW2 and replace **Guild Wars 2/addons/TyriaChronicle.dll** with the file from the ZIP. Settings and lists are retained. The SHA256 file verifies the ZIP. GitHub&#39;s Source code downloads are not the installable addon; the standalone DLL asset is for Nexus updates. Version information may take a few minutes to propagate.
+
+## Support and feedback
+
+Use Help &amp; feedback or [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports are optional. For fishing times, include your map, selected region, local/UTC setting and the observed phase.
+
+## Testing and limitations
+
+1498 core checks plus update-checker and UI/settings/DLL lifecycle tests passed locally. Fishing tests cover phase boundaries, regional differences, five-minute windows, reminder lead and duplicate suppression, saved settings and both region popups. In-game confirmation of the new clock and reminders is welcome.
+
+Schedules are estimates, not live map status. Share list does not check travel or event duration. Say (test) sends one preview message per click; keep game chat empty and closed. Full-map and cutscene hiding is not separately implemented.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.11">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.10-beta · 11 November 2026</span><h3>Tyria Chronicle 0.2.10-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.10-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Reduced automatic in-addon version checks from every 15 minutes to once per hour.
+- The startup check and manual Check for updates remain available.
+- Event schedules, event reminders and fishing reminders are unchanged.
+
+## Fishing
+
+Open Fishing next to the clock, choose your map region, then enable Fishing reminders if wanted. Main Notifications must be on and Mute off. Dawn and Dusk last five minutes; day/night fish can also be caught during those transitions. This clock follows the standard outdoor schedule, not live map detection: fixed-time maps and instances can differ.
+
+## Download and update
+
+Use Nexus&#39;s Check for Updates with pre-release updates enabled for Tyria Chronicle. In 0.2.8-beta or newer, Update options &gt; Open Nexus addons provides a shortcut to the host addon list; complete the update in Nexus. The old direct Update button in 0.2.6/0.2.7 is not supported.
+
+For manual installation, download **TyriaChronicle-0.2.10-beta-windows-x64.zip**, close GW2 and replace **Guild Wars 2/addons/TyriaChronicle.dll** with the file from the ZIP. Settings and lists are retained. The SHA256 file verifies the ZIP. GitHub&#39;s Source code downloads are not the installable addon; the standalone DLL asset is for Nexus updates. Version information may take a few minutes to propagate.
+
+## Support and feedback
+
+Use Help &amp; feedback or [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports are optional. For fishing times, include your map, selected region, local/UTC setting and the observed phase.
+
+## Testing and limitations
+
+1498 core checks plus update-checker and UI/settings/DLL lifecycle tests passed locally. Fishing tests cover phase boundaries, regional differences, five-minute windows, reminder lead and duplicate suppression, saved settings and both region popups. In-game confirmation of the new clock and reminders is welcome.
+
+Schedules are estimates, not live map status. Share list does not check travel or event duration. Say (test) sends one preview message per click; keep game chat empty and closed. Full-map and cutscene hiding is not separately implemented.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.10">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.9-beta · 11 November 2026</span><h3>Tyria Chronicle 0.2.9-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.9-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- New fish-marked Fishing button near the clock: see Dawn, Day, Dusk and Night, a compact phase timeline and time until the next phase.
+- Choose Tyria or Cantha / Castora manually for the appropriate day/night cycle.
+- Optional fishing reminders with selectable phases and lead time. Dawn and Dusk are preselected; reminders are off until enabled. They use the main Notifications and Mute switches and appear in Next reminder.
+- Shared event and train messages now use xx:MM instead of your local hour, for both Copy and Say.
+
+## Fishing
+
+Open Fishing next to the clock, choose your map region, then enable Fishing reminders if wanted. Main Notifications must be on and Mute off. Dawn and Dusk last five minutes; day/night fish can also be caught during those transitions. This clock follows the standard outdoor schedule, not live map detection: fixed-time maps and instances can differ.
+
+## Download and update
+
+Use Nexus&#39;s Check for Updates with pre-release updates enabled for Tyria Chronicle. In 0.2.8-beta or newer, Update options &gt; Open Nexus addons provides a shortcut to the host addon list; complete the update in Nexus. The old direct Update button in 0.2.6/0.2.7 is not supported.
+
+For manual installation, download **TyriaChronicle-0.2.9-beta-windows-x64.zip**, close GW2 and replace **Guild Wars 2/addons/TyriaChronicle.dll** with the file from the ZIP. Settings and lists are retained. The SHA256 file verifies the ZIP. GitHub&#39;s Source code downloads are not the installable addon; the standalone DLL asset is for Nexus updates. Version information may take a few minutes to propagate.
+
+## Support and feedback
+
+Use Help &amp; feedback or [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports are optional. For fishing times, include your map, selected region, local/UTC setting and the observed phase.
+
+## Testing and limitations
+
+1498 core checks plus update-checker and UI/settings/DLL lifecycle tests passed locally. Fishing tests cover phase boundaries, regional differences, five-minute windows, reminder lead and duplicate suppression, saved settings and both region popups. In-game confirmation of the new clock and reminders is welcome.
+
+Schedules are estimates, not live map status. Share list does not check travel or event duration. Say (test) sends one preview message per click; keep game chat empty and closed. Full-map and cutscene hiding is not separately implemented.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.9">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.8-beta · 11 November 2026</span><h3>Tyria Chronicle 0.2.8-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.8-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Fixed the misleading Updating state: the old direct update request was rejected by Nexus for GitHub-hosted addons.
+- New Update options provide Open Nexus addons and Download beta. In Nexus, find Tyria Chronicle and choose Check for Updates.
+- Automatic version checks, the new-version banner and clock-icon notification remain available.
+- Added regression tests to ensure the addon no longer calls the incompatible installation API.
+
+## Download and update
+
+**Important for 0.2.6-beta and 0.2.7-beta:** the old in-addon Update button cannot install this fix. Use Nexus&#39;s own Check for Updates with pre-release updates enabled for Tyria Chronicle, or install the ZIP manually. Waiting on Updating will not complete the old request.
+
+For manual installation, download **TyriaChronicle-0.2.8-beta-windows-x64.zip**, close GW2 and replace **Guild Wars 2/addons/TyriaChronicle.dll** with the file from the ZIP. Your settings and lists are retained. The SHA256 file verifies the ZIP. GitHub&#39;s Source code downloads are not the installable addon; the separate DLL asset is for Nexus updates.
+
+From this version, Update options opens the available routes; installation is performed in Nexus or manually, not directly by the addon. The Nexus navigation shortcut can vary by host version, so manual menu access and downloads remain available. GitHub version information may take a few minutes to propagate.
+
+## Support and feedback
+
+Use **Help &amp; feedback** or [Discord](https://discord.gg/3gf8n2P9KS) for problems and ideas. GitHub reports remain optional.
+
+## Testing and limitations
+
+Core, update-checker, navigation, UI/settings and DLL lifecycle checks are run before publication. In-game navigation still needs confirmation on your Nexus version. Schedules are estimates, not live map status. Share list uses the next scheduled start for each event and does not check travel or event duration. Keep game chat empty and closed when using Say (test); one click sends one preview message. Full-map and cutscene hiding is not separately implemented.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.8">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.7-beta · 11 November 2026</span><h3>Tyria Chronicle 0.2.7-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.7-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Ley-Line Anomaly now shares Done today across Gendarran Fields, Timberline Falls and Iron Marches.
+- Marking any location done pauses reminders for all three until daily reset (00:00 UTC). Undo from any location restores the group according to your saved reminder choices.
+- Existing saved checkmarks from older versions also apply to the whole group.
+- Completion is still marked manually using Done today; the addon does not detect kills automatically.
+
+## Download and update
+
+Download **TyriaChronicle-0.2.7-beta-windows-x64.zip**, close GW2 and copy **TyriaChronicle.dll** into **Guild Wars 2/addons**, replacing the previous DLL. Your settings are retained. The SHA256 file verifies the ZIP; GitHub&#39;s Source code downloads are not the installable addon.
+
+Users on 0.2.1-beta or newer can also use Nexus updates with pre-release updates enabled for Tyria Chronicle. The separate DLL asset is for the Nexus updater.
+
+On 0.2.6-beta or newer, use Help &amp; feedback &gt; Check for updates, then Update via Nexus when offered. On older versions, use Nexus Check for Updates with pre-release updates enabled or install the ZIP manually. GitHub version information can take a few minutes to propagate.
+
+## Support and feedback
+
+Open **Help &amp; feedback** in the event list, or join [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports require a GitHub account. Troubleshooting information contains version and basic reminder settings, without account details, file paths, chat or logs.
+
+## Testing and limitations
+
+Core, UI/settings, update-checker and DLL lifecycle checks are run before publication. The public version feed is checked live. In-game installation through the new Update button still needs verification with a later beta. Share list uses one next start per event within 24 hours and does not check travel or event duration. Keep game chat empty and closed when using Say (test); each click sends one preview message. In-game feedback is welcome. Schedules are estimates, not live map status. This beta does not separately hide the UI for full-map view or cutscenes.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.7">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.6-beta · 11 November 2026</span><h3>Tyria Chronicle 0.2.6-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.6-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Share an entire custom event train from My lists &gt; Share list, with the next start time and waypoint for each stop.
+- Copy or Say each preview message. Long trains split between events so waypoint codes stay intact.
+- Automatic beta checks after startup and every 15 minutes, with a new-version banner and clock-icon notification.
+- Update directly through Nexus from the addon, or check manually under Help &amp; feedback and Settings &gt; Updates.
+
+## Download and update
+
+Download **TyriaChronicle-0.2.6-beta-windows-x64.zip**, close GW2 and copy **TyriaChronicle.dll** into **Guild Wars 2/addons**, replacing the previous DLL. Your settings are retained. The SHA256 file verifies the ZIP; GitHub&#39;s Source code downloads are not the installable addon.
+
+Users on 0.2.1-beta or newer can also use Nexus updates with pre-release updates enabled for Tyria Chronicle. The separate DLL asset is for the Nexus updater.
+
+To get this version from 0.2.5-beta or older, use Nexus Check for Updates with pre-release updates enabled, or install the ZIP manually. The new in-addon Update button becomes available after installing 0.2.6-beta and can install future newer betas.
+
+## Support and feedback
+
+Open **Help &amp; feedback** in the event list, or join [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports require a GitHub account. Troubleshooting information contains version and basic reminder settings, without account details, file paths, chat or logs.
+
+## Testing and limitations
+
+Core, UI/settings, update-checker and DLL lifecycle checks are run before publication. The public version feed is checked live. In-game installation through the new Update button still needs verification with a later beta. Share list uses one next start per event within 24 hours and does not check travel or event duration. Keep game chat empty and closed when using Say (test); each click sends one preview message. In-game feedback is welcome. Schedules are estimates, not live map status. This beta does not separately hide the UI for full-map view or cutscenes.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.6">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.5-beta · 11 November 2026</span><h3>Tyria Chronicle 0.2.5-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.5-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Open Share on an event to copy its start time, name and waypoint as a chat message.
+- Experimental Say (test) tries to send one event message to nearby players using /say. Keep game chat empty and closed before testing.
+- Say stops pending input if GW2 loses focus; Copy remains available for pasting into a channel yourself.
+- In-game Say delivery is not yet verified. Please report whether it sends correctly, only fills chat, or fails.
+
+## Download and update
+
+Download **TyriaChronicle-0.2.5-beta-windows-x64.zip**, close GW2 and copy **TyriaChronicle.dll** into **Guild Wars 2/addons**, replacing the previous DLL. Your settings are retained. The SHA256 file verifies the ZIP; GitHub&#39;s Source code downloads are not the installable addon.
+
+Users on 0.2.1-beta or newer can also use Nexus updates with pre-release updates enabled for Tyria Chronicle. The separate DLL asset is for the Nexus updater.
+
+## Support and feedback
+
+Open **Help &amp; feedback** in the event list, or join [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports require a GitHub account. Troubleshooting information contains version and basic reminder settings, without account details, file paths, chat or logs.
+
+## Testing and limitations
+
+Core, UI/settings and DLL lifecycle checks are run before publication. In-game feedback is welcome. Schedules are estimates, not live map status. This beta does not separately hide the UI for full-map view or cutscenes.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.5">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.4-beta · 11 November 2026</span><h3>Tyria Chronicle 0.2.4-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.4-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- Discord is now the first choice for reporting problems, asking for help and sharing feedback.
+- GitHub bug reports remain an optional alternative; a GitHub account is not needed for Discord feedback.
+- The public download page links directly to the Discord server.
+
+## Download and update
+
+Download **TyriaChronicle-0.2.4-beta-windows-x64.zip**, close GW2 and copy **TyriaChronicle.dll** into **Guild Wars 2/addons**, replacing the previous DLL. Your settings are retained. The SHA256 file verifies the ZIP; GitHub&#39;s Source code downloads are not the installable addon.
+
+Users on 0.2.1-beta or newer can also use Nexus updates with pre-release updates enabled for Tyria Chronicle. The separate DLL asset is for the Nexus updater.
+
+## Support and feedback
+
+Open **Help &amp; feedback** in the event list, or join [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports require a GitHub account. Troubleshooting information contains version and basic reminder settings, without account details, file paths, chat or logs.
+
+## Testing and limitations
+
+Core, UI/settings and DLL lifecycle checks are run before publication. In-game feedback is welcome. Schedules are estimates, not live map status. This beta does not separately hide the UI for full-map view or cutscenes.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.4">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.3-beta · 11 November 2026</span><h3>Tyria Chronicle 0.2.3-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.3-beta
+
+Windows x64; requires Raidcore Nexus. By ZevaXO.
+
+## What&#39;s new
+
+- New Help &amp; feedback menu, replacing Help (?).
+- Report a problem on GitHub with your version and basic reminder settings prefilled. Review the report before submitting.
+- Open the Discord server for support and ideas directly from the addon.
+- Copy troubleshooting information or open version news and downloads from the same menu.
+- New public beta releases are announced automatically in Discord.
+
+## Download and update
+
+Download **TyriaChronicle-0.2.3-beta-windows-x64.zip**, close GW2 and copy **TyriaChronicle.dll** into **Guild Wars 2/addons**, replacing the previous DLL. Your settings are retained. The SHA256 file verifies the ZIP; GitHub&#39;s Source code downloads are not the installable addon.
+
+Users on 0.2.1-beta or newer can also use Nexus updates with pre-release updates enabled for Tyria Chronicle. The separate DLL asset is for the Nexus updater.
+
+## Support and feedback
+
+Open **Help &amp; feedback** in the event list, or join [Discord](https://discord.gg/3gf8n2P9KS). GitHub bug reports require a GitHub account. Troubleshooting information contains version and basic reminder settings, without account details, file paths, chat or logs.
+
+## Testing and limitations
+
+Core, UI/settings and DLL lifecycle checks are run before publication. In-game feedback is welcome. Schedules are estimates, not live map status. This beta does not separately hide the UI for full-map view or cutscenes.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.3">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.2-beta · 10 November 2026</span><h3>Tyria Chronicle 0.2.2-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.2-beta
+
+Clock-icon update by **ZevaXO**. Windows x64; requires Raidcore Nexus.
+
+## Download
+
+Use **TyriaChronicle-0.2.2-beta-windows-x64.zip** in the release assets. The accompanying `.sha256` file is its checksum. The Source code downloads generated by GitHub are not the installable addon.
+
+## What&#39;s included
+
+- Selected design B clock icon with dark border, hands and hour marks.
+- Newer version for testing Nexus updates from 0.2.1-beta.
+
+- Nexus GitHub update provider, using this public beta repository.
+- Separate TyriaChronicle.dll release asset for Nexus to download.
+- Numeric tag v0.2.2 with GitHub&#39;s pre-release flag; beta users need pre-release updates enabled in Nexus.
+- Readable event list grouped by start time, with short explanations and waypoint copy.
+- Category and individual reminders, optional sound, and a movable popup.
+- Waypoint copy and Done today directly in the popup.
+- Four editable starter lists and an empty-list option.
+- Daily completion with undo, monochrome Quick Access icon, local preferences.
+- Easier 1h/2h/4h/24h time-range choices and direct minute entry.
+- Nexus gameplay visibility, fixed-size scaling and Escape handling.
+
+## Install/update
+
+Close GW2, extract the ZIP and copy **TyriaChronicle.dll** to **Guild Wars 2/addons**. Replace the previous DLL to update; your settings are kept. Enable the addon in Nexus, then open it with its clock icon or **Ctrl+Shift+E**.
+
+Nexus update support is enabled in this version. Install 0.2.1-beta manually once if you have 0.2.0-beta, then allow pre-release updates for this addon in Nexus. Future versions must have a higher numeric version and a standalone DLL release asset.
+
+## Test and report
+
+The ZIP includes INSTALL.md and TESTING.md. Try normal play, event reminders, copied waypoints, daily completion and your own lists. Report the displayed version, steps and expected/actual result. Please crop screenshots and redact logs.
+
+1399 core checks and UI/settings/DLL lifecycle tests passed locally. Broader in-game testing is still needed. Schedules are not live map status, and this beta does not separately hide the UI for full-map view or cutscenes.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.2">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.1-beta · 10 November 2026</span><h3>Tyria Chronicle 0.2.1-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.1-beta
+
+Updater-enabled beta by **ZevaXO**. Windows x64; requires Raidcore Nexus.
+
+## Download
+
+Use **TyriaChronicle-0.2.1-beta-windows-x64.zip** in the release assets. The accompanying `.sha256` file is its checksum. The Source code downloads generated by GitHub are not the installable addon.
+
+## What&#39;s included
+
+- Nexus GitHub update provider, using this public beta repository.
+- Separate TyriaChronicle.dll release asset for Nexus to download.
+- Numeric tag v0.2.1 with GitHub&#39;s pre-release flag; beta users need pre-release updates enabled in Nexus.
+- Readable event list grouped by start time, with short explanations and waypoint copy.
+- Category and individual reminders, optional sound, and a movable popup.
+- Waypoint copy and Done today directly in the popup.
+- Four editable starter lists and an empty-list option.
+- Daily completion with undo, monochrome Quick Access icon, local preferences.
+- Easier 1h/2h/4h/24h time-range choices and direct minute entry.
+- Nexus gameplay visibility, fixed-size scaling and Escape handling.
+
+## Install/update
+
+Close GW2, extract the ZIP and copy **TyriaChronicle.dll** to **Guild Wars 2/addons**. Replace the previous DLL to update; your settings are kept. Enable the addon in Nexus, then open it with its clock icon or **Ctrl+Shift+E**.
+
+Nexus update support is enabled in this version. Install 0.2.1-beta manually once if you have 0.2.0-beta, then allow pre-release updates for this addon in Nexus. Future versions must have a higher numeric version and a standalone DLL release asset.
+
+## Test and report
+
+The ZIP includes INSTALL.md and TESTING.md. Try normal play, event reminders, copied waypoints, daily completion and your own lists. Report the displayed version, steps and expected/actual result. Please crop screenshots and redact logs.
+
+1399 core checks and UI/settings/DLL lifecycle tests passed locally. Broader in-game testing is still needed. Schedules are not live map status, and this beta does not separately hide the UI for full-map view or cutscenes.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.1">Original release notes ↗</a></div><div class="changelog-entry"><span class="version">0.2.0-beta · 10 November 2026</span><h3>Tyria Chronicle 0.2.0-beta</h3><details><summary>Release notes</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px"># Tyria Chronicle 0.2.0-beta
+
+First small-scale test beta by **ZevaXO**. Windows x64; requires Raidcore Nexus.
+
+## Download
+
+Use **TyriaChronicle-0.2.0-beta-windows-x64.zip** in the release assets. The accompanying `.sha256` file is its checksum. The Source code downloads generated by GitHub are not the installable addon.
+
+## What&#39;s included
+
+- Readable event list grouped by start time, with short explanations and waypoint copy.
+- Category and individual reminders, optional sound, and a movable popup.
+- Waypoint copy and Done today directly in the popup.
+- Four editable starter lists and an empty-list option.
+- Daily completion with undo, monochrome Quick Access icon, local preferences.
+- Easier 1h/2h/4h/24h time-range choices and direct minute entry.
+- Nexus gameplay visibility, fixed-size scaling and Escape handling.
+
+## Install/update
+
+Close GW2, extract the ZIP and copy **TyriaChronicle.dll** to **Guild Wars 2/addons**. Replace the previous DLL to update; your settings are kept. Enable the addon in Nexus, then open it with its clock icon or **Ctrl+Shift+E**.
+
+No automatic updater is configured yet. Future betas will appear on this repository&#39;s Releases page and be announced through the supplied feedback channel.
+
+## Test and report
+
+The ZIP includes INSTALL.md and TESTING.md. Try normal play, event reminders, copied waypoints, daily completion and your own lists. Report the displayed version, steps and expected/actual result. Please crop screenshots and redact logs.
+
+1399 core checks and UI/settings/DLL lifecycle tests passed locally. Broader in-game testing is still needed. Schedules are not live map status, and this beta does not separately hide the UI for full-map view or cutscenes.
+
+This is an AI-assisted development project, not an ArenaNet or Raidcore product. Applicable license notices are included in the ZIP.
+</div></details><a href="https://github.com/ZevaXO/TyriaChronicle-beta/releases/tag/v0.2.0-beta">Original release notes ↗</a></div></div>
+<!-- release:changelog:end --></article>
 <article id="about"><p class="number">09 / ABOUT & SUPPORT</p><h2>Made by an adventurer, for adventurers.</h2><p>Tyria Chronicle is an independent Guild Wars 2 companion addon by <strong>ZevaXO</strong>, offering event timers, waypoint reminders, fishing clocks and personal goal lists. It is an early beta developed with AI-assisted code and documentation. The category symbols and header clock are original AI-generated generic artwork, created from text-only concepts without game-image references. They are not official game assets.</p><p>Ask for help, report problems or share ideas on <a href="https://discord.gg/3gf8n2P9KS">Discord</a>. You may also <a href="https://github.com/ZevaXO/TyriaChronicle-beta/issues">open a GitHub issue</a>. The public repository contains downloads and release information; development source remains private.</p><p>This is an independent fan project, not affiliated with ArenaNet, NCSOFT, Raidcore or Blish HUD. Guild Wars 2 and related game content belong to their respective owners. Package licenses and third-party notices are included in the addon ZIP.</p></article>
 <article id="privacy"><p class="number">10 / PRIVACY & COOKIES</p><h2>A simple website, with a small footprint.</h2><p>This website does not set cookies, use analytics, load third-party fonts, create accounts or store guide searches. Search runs locally in your browser. No game account information or API key is requested by this website.</p><p>Following download, Discord, Nexus or GitHub links takes you to external services governed by their own privacy policies. A hosting provider may process connection information such as IP addresses in server logs. For the proposed GitHub Pages hosting, see <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub’s privacy statement</a>.</p><p>This describes this website, not the addon or external services. The addon stores preferences locally and checks the public GitHub version feed after startup and hourly. GitHub receives ordinary connection metadata. No account telemetry is collected and no GW2 API key is needed. This website does not make those addon update requests. For questions, contact the project through <a href="https://discord.gg/3gf8n2P9KS">Discord</a>.</p></article></div></main><footer><div class="footer-brand"><a class="brand" href="index.html"><img src="images/web-header-clock-v1.png" alt="" width="32" height="32"><span>TYRIA CHRONICLE</span></a><p>An event companion for Guild Wars 2, by ZevaXO.</p><p>An independent fan project. Guild Wars 2 and related game content belong to ArenaNet, NCSOFT and their respective owners. Not affiliated with ArenaNet, NCSOFT, Raidcore or Blish HUD.</p></div><div class="footer-links"><span lang="en">English</span><a href="https://discord.gg/3gf8n2P9KS">Join our Discord ↗</a><nav aria-label="Footer navigation"><a href="guide.html#changelog">What’s new</a><a href="guide.html#privacy">Privacy & cookies</a><a href="guide.html#about">About</a><a href="guide.html#faq">Support</a></nav><small>AI-assisted development & original AI-generated symbols · Community made</small></div></footer></body></html>
+
 
 
