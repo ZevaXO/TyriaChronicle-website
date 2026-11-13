@@ -1,13 +1,14 @@
 name: Sync beta release information
 on:
   schedule:
-    - cron: '17 * * * *'
+    - cron: '7,22,37,52 * * * *'
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - '.github/workflows/sync-releases.yml'
       - 'scripts/**'
+      - 'release-live.mjs'
       - 'release-config.json'
 permissions:
   contents: write
@@ -25,7 +26,7 @@ jobs:
         with:
           ref: main
       - name: Test release synchronization
-        run: node --test scripts/sync-releases.test.mjs
+        run: node --test scripts/*.test.mjs
       - name: Fetch published beta releases
         env:
           GITHUB_TOKEN: ${{ github.token }}
