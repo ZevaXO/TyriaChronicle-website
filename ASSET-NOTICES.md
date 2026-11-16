@@ -15,3 +15,5 @@ Earlier train-planning screenshot: supplied by the owner on 12 November 2026 as 
 Website derivatives web-category-metal-v1.png (768x512) and web-header-clock-v1.png (384x384) are conventional resized PNG copies of the documented originals; no generative edits.
 
 Update 12 November 2026: two additional owner-supplied screenshots (Obsidian armour goal list and train editor with later starts) are used unchanged as current 0.2.15 product documentation. Earlier interface captures remain identified with the 0.2.14 visual design. No generative edits or new external image sources.
+
+Web timer added locally 16 November 2026: reuses only the existing web-category-metal-v1.png and web-header-clock-v1.png derivatives. Copy, waypoint, fish, star and reward symbols are original inline SVG geometry. No official item icons or new generated images. Timer schedule redistribution includes the qjv MIT notice at licenses/qjv-schedule-data.txt. Favourites, daily checkmarks and time preferences use namespaced browser localStorage; searches are not stored or transmitted. No backend, accounts, tracking or paid services added. Personal lists/templates/train planning remain addon-only.
