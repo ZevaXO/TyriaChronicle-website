@@ -8,7 +8,7 @@ The script replaces only named release-information blocks: homepage version, ZIP
 
 `## Important upgrade note` (or an Important update/notice/installation heading) in the newest release becomes a prominent message. `release-config.json` also contains persistent advisories, including the manual-upgrade requirement for users on 0.2.15/0.2.16. Review and explicitly remove an advisory when it is no longer needed; absence of a warning in a newer release does not silently remove pinned advice.
 
-Feature guides and screenshots remain manually maintained. Change manualVersion/manualReviewed or installationVersion/installationReviewed only after actually reviewing those parts. The current feature guide review is 0.2.15 (12 November); installation/update review is 0.2.17 (13 November).
+Feature guides and screenshots remain manually maintained. Change manualVersion/manualReviewed or installationVersion/installationReviewed only after actually reviewing those parts. The current feature and installation guide review is 0.2.26 (17 November 2026), checked against public documentation and the implementation, without a new in-game verification. Screenshots remain explicitly labelled 0.2.14/0.2.15.
 
 The workflow uses the temporary repository GITHUB_TOKEN with contents:write and pages:write; no personal access token or beta-repository write credential is required. It explicitly requests a Pages build after a changed snapshot (and on manual/push runs), since a GITHUB_TOKEN push does not itself start another workflow. Existing main/root branch-based Pages settings are retained. No source-setting switch is needed.
 
