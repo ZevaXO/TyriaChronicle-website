@@ -1,4 +1,6 @@
 import { categories, completionKey, validateCatalog, filteredRows, unscheduledEvents, shareMessage, clockText, countdown, fishingAt, phases, loadState, saveState, resetDaily } from './timer-core.mjs';
+import { createReminders } from './reminders.mjs';
+import { createReminderSound } from './reminder-sound.mjs';
 
 const $ = id => document.getElementById(id);
 const categorySymbols = { 'World Bosses': 'boss', 'Meta Events': 'meta', Convergences: 'rift', 'Public Instances': 'arch', 'Timed Events': 'timed', Festivals: 'festival' };
@@ -37,7 +39,7 @@ function iconButton(symbol, label, action, eventId, pressed) {
 }
 
 let data, state, storage, storageAvailable = true, scope = 'all', category = '', activeEvent = null, toastTimer;
-let rowSignature = '', lastMinute = -1;
+let rowSignature = '', lastMinute = -1, reminders;
 const filters = { query: '', horizon: 120, view: 'next', expansion: '', gemstone: false, hideDone: false };
 const epoch = () => Math.floor(Date.now() / 1000);
 function persist() {
@@ -73,6 +75,7 @@ function actionButtons(event, row) {
   const group = el('div', 'card-buttons');
   if (event.waypoint) group.append(iconButton('waypoint', `Copy waypoint: ${event.name}`, 'waypoint', event.id));
   if (row) { const b = iconButton('message', `Copy event message: ${event.name}`, 'message', event.id); b.dataset.start = row.start; group.append(b); }
+  if (row) { const watched = reminders?.has(event.id) || false; const b = button(watched ? 'Watching' : 'Remind', 'watch', event.id, 'watch-button'); b.setAttribute('aria-pressed', String(watched)); b.setAttribute('aria-label', `${watched ? 'Stop reminders' : 'Select reminders'}: ${event.name}`); b.title = 'Choose this event for optional open-tab browser reminders. This does not enable notifications by itself.'; group.append(b); }
   const done = state.done.includes(completionKey(event.id));
   const b = button(done ? 'Undo done' : 'Done today', 'done', event.id, 'done-button');
   b.setAttribute('aria-pressed', String(done)); b.title = 'Mark done until 00:00 UTC. Ley-Line locations share one checkmark. This does not detect reward claims.';
@@ -184,6 +187,7 @@ document.addEventListener('click', event => {
   if (!action) return;
   const e = data.events.find(e => e.id === id); if (!e) return;
   if (action === 'favourite') toggleValue('favourites', id);
+  else if (action === 'watch') { reminders?.toggle(id); if ($('event-dialog').open && activeEvent?.event.id === id) showEvent(activeEvent, false); }
   else if (action === 'done') { toggleValue('done', completionKey(id)); status(state.done.includes(completionKey(id)) ? 'Marked done until 00:00 UTC' : 'Daily checkmark removed'); if ($('event-dialog').open && activeEvent?.event.id === id) showEvent(activeEvent, false); }
   else if (action === 'waypoint') copy(e.waypoint, 'Waypoint');
   else if (action === 'message') { const start = Number(target.dataset.start); if (Number.isFinite(start)) copy(shareMessage(e, start), 'Event message'); }
@@ -199,6 +203,12 @@ $('quick-help').addEventListener('click', () => $('help-dialog').showModal());
 $('fishing-open').addEventListener('click', () => { if (state) { $('fishing-dialog').showModal(); tickClocks(); } });
 $('browse-toggle').addEventListener('click', () => { const open = $('timer-sidebar').classList.toggle('is-open'); $('browse-toggle').setAttribute('aria-expanded', String(open)); });
 $('retry-load').addEventListener('click', initialise);
+$('reminder-toggle').addEventListener('click', () => { if ($('reminder-toggle').getAttribute('aria-pressed') === 'true') reminders?.stop('Browser reminders paused.'); else reminders?.enable(); });
+$('reminder-lead').addEventListener('change', e => reminders?.setLead(e.target.value));
+const reminderSound = createReminderSound(text => { $('reminder-status').textContent = text; });
+$('reminder-sound').addEventListener('change', e => reminderSound.setEnabled(e.target.checked));
+$('reminder-sound-test').addEventListener('click', () => { $('reminder-sound').checked = true; reminderSound.setEnabled(true); });
+$('reminder-test').addEventListener('click', () => reminders?.test());
 document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
 window.addEventListener('pageshow', () => refresh());
 window.addEventListener('storage', e => { if (data && e.key === 'tyria-chronicle.web-timer.v1') { const loaded = loadState(storage, data.events, epoch()); state = loaded.state; $('timezone').value = state.utc ? 'utc' : 'local'; $('fishing-region').value = state.region; refresh(true); } });
@@ -210,6 +220,14 @@ async function initialise() {
     data = validateCatalog(await response.json());
     try { storage = window.localStorage; } catch { storage = null; }
     const loaded = loadState(storage, data.events, epoch()); state = loaded.state; storageAvailable = loaded.available;
+    reminders?.destroy();
+    reminders = createReminders({ playSound: reminderSound.play, events: data.events, storage, getState: () => { if (resetDaily(state, epoch())) { persist(); refresh(true); } return state; }, report: text => { $('reminder-status').textContent = text; }, onChange: r => {
+      $('reminder-compact-status').textContent = `${r.enabled ? 'On' : 'Paused'} · ${r.watched.length} selected`;
+      $('reminder-toggle').disabled = !r.supported; $('reminder-toggle').textContent = r.enabled ? 'Pause browser reminders' : 'Enable browser reminders'; $('reminder-toggle').setAttribute('aria-pressed', String(r.enabled));
+      $('reminder-lead').disabled = false; $('reminder-lead').value = r.lead; $('reminder-test').disabled = !r.enabled;
+      $('reminder-status').textContent = !r.supported ? 'System notifications are unavailable here. Try a supported desktop browser over HTTPS.' : `${r.enabled ? 'Enabled in this tab' : 'Paused'} · ${r.watched.length} selected events · ${r.lead} minutes before. Keep this tab open; alerts are not guaranteed while sleeping or suspended.`;
+      refresh(true);
+    } });
     $('storage-warning').hidden = storageAvailable;
     $('category-nav').replaceChildren(...categories.map(name => { const b = button(name); b.dataset.category = name; b.setAttribute('aria-pressed', 'false'); return b; }));
     const options = [el('option', '', 'All expansions'), ...[...new Set(data.events.map(e => e.expansion))].sort().map(name => { const o = el('option', '', name); o.value = name; return o; })]; options[0].value = '';
