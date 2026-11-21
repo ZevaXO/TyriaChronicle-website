@@ -8,6 +8,8 @@ const paths = {
   waypoint: ['M10 2 18 10 10 18 2 10Z', 'M10 5 15 10 10 15 5 10Z'],
   message: ['M4 3H13V15H4Z', 'M8 6H17V18H8Z', 'M10 9H15M10 12H15M10 15H13'],
   star: ['M10 2 12.4 7.1 18 7.9 14 11.8 15 17.5 10 14.8 5 17.5 6 11.8 2 7.9 7.6 7.1Z'],
+  eye: ['M1 10Q10 0 19 10Q10 20 1 10Z', 'M13 10A3 3 0 1 1 7 10A3 3 0 1 1 13 10Z'],
+  'eye-off': ['M1 10Q10 0 19 10Q10 20 1 10Z', 'M13 10A3 3 0 1 1 7 10A3 3 0 1 1 13 10Z', 'M2 18 18 2'],
   gem: ['M3 4H17L20 9 10 19 0 9Z', 'M0 9H20M7 4 5 9 10 19 15 9 13 4'],
   fish: ['M2 10Q8 1 15 10Q8 19 2 10ZM15 10 19 5V15ZM6 9V10']
 };
@@ -76,7 +78,7 @@ function actionButtons(event, row) {
   const group = el('div', 'card-buttons');
   if (event.waypoint) group.append(iconButton('waypoint', `Copy waypoint: ${event.name}`, 'waypoint', event.id));
   if (row) { const b = iconButton('message', `Copy event message: ${event.name}`, 'message', event.id); b.dataset.start = row.start; group.append(b); }
-  if (row) { const watched = reminders?.has(event.id) || false; const b = button(watched ? 'Watching' : 'Remind', 'watch', event.id, 'watch-button'); b.setAttribute('aria-pressed', String(watched)); b.setAttribute('aria-label', `${watched ? 'Stop reminders' : 'Select reminders'}: ${event.name}`); b.title = 'Choose this event for optional open-tab browser reminders. This does not enable notifications by itself.'; group.append(b); }
+  if (row) { const watched = watchedIds.includes(event.id); const b = iconButton(watched ? 'eye' : 'eye-off', `${watched ? 'Stop watching' : 'Watch event'}: ${event.name}`, 'watch', event.id, watched); b.classList.add('watch-button'); b.title += watched ? '\nSelected in Watched events. Browser reminders must be enabled separately.' : '\nAdd to Watched events. Browser reminders must be enabled separately.'; group.append(b); }
   const done = state.done.includes(completionKey(event.id));
   const b = button(done ? 'Undo done' : 'Done today', 'done', event.id, 'done-button');
   b.setAttribute('aria-pressed', String(done)); b.title = 'Mark done until 00:00 UTC. Ley-Line locations share one checkmark. This does not detect reward claims.';
