@@ -39,7 +39,7 @@ function iconButton(symbol, label, action, eventId, pressed) {
 }
 
 let data, state, storage, storageAvailable = true, scope = 'all', category = '', activeEvent = null, toastTimer;
-let rowSignature = '', lastMinute = -1, reminders;
+let rowSignature = '', lastMinute = -1, reminders, watchedIds = [];
 const filters = { query: '', horizon: 120, view: 'next', expansion: '', gemstone: false, hideDone: false };
 const epoch = () => Math.floor(Date.now() / 1000);
 function persist() {
@@ -69,7 +69,8 @@ function syncNavigation() {
   document.querySelectorAll('[data-scope]').forEach(b => b.setAttribute('aria-pressed', String(scope === b.dataset.scope && !category)));
   document.querySelectorAll('[data-category]').forEach(b => b.setAttribute('aria-pressed', String(category === b.dataset.category)));
   $('favourites-count').textContent = state.favourites.length;
-  $('view-title').textContent = category || (scope === 'favourites' ? 'Favourites' : 'All events');
+  $('watched-count').textContent = watchedIds.length;
+  $('view-title').textContent = category || (scope === 'watched' ? 'Watched events' : scope === 'favourites' ? 'Favourites' : 'All events');
 }
 function actionButtons(event, row) {
   const group = el('div', 'card-buttons');
@@ -120,8 +121,9 @@ function refresh(force = false) {
   const now = epoch(); if (resetDaily(state, now)) { persist(); force = true; }
   syncNavigation();
   const selected = { ...filters, category, favourites: scope === 'favourites' };
-  const rows = filteredRows(data.events, now, selected, state);
-  const untimed = filters.view === 'now' ? [] : unscheduledEvents(data.events, selected, state);
+  const events = scope === 'watched' ? data.events.filter(e => watchedIds.includes(e.id)) : data.events;
+  const rows = filteredRows(events, now, selected, state);
+  const untimed = filters.view === 'now' ? [] : unscheduledEvents(events, selected, state);
   const signature = JSON.stringify([rows.map(r => [r.event.id, r.start]), untimed.map(e => e.id), state.done, state.favourites, state.utc]);
   const total = rows.length + untimed.length;
   $('result-count').textContent = `${rows.length} ${filters.view === 'all' ? 'starts' : filters.view === 'now' ? 'scheduled windows' : 'upcoming'}${untimed.length ? ` · ${untimed.length} unverified` : ''}`;
@@ -222,6 +224,7 @@ async function initialise() {
     const loaded = loadState(storage, data.events, epoch()); state = loaded.state; storageAvailable = loaded.available;
     reminders?.destroy();
     reminders = createReminders({ playSound: reminderSound.play, events: data.events, storage, getState: () => { if (resetDaily(state, epoch())) { persist(); refresh(true); } return state; }, report: text => { $('reminder-status').textContent = text; }, onChange: r => {
+      watchedIds = [...r.watched];
       $('reminder-compact-status').textContent = `${r.enabled ? 'On' : 'Paused'} · ${r.watched.length} selected`;
       $('reminder-toggle').disabled = !r.supported; $('reminder-toggle').textContent = r.enabled ? 'Pause browser reminders' : 'Enable browser reminders'; $('reminder-toggle').setAttribute('aria-pressed', String(r.enabled));
       $('reminder-lead').disabled = false; $('reminder-lead').value = r.lead; $('reminder-test').disabled = !r.enabled;
